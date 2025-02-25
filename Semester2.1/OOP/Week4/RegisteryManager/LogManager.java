@@ -1,4 +1,4 @@
-package RegistryManager;
+package RegisteryManager;
 
 public class LogManager {
     private static LogManager logm;

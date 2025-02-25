@@ -1,4 +1,4 @@
-package RegistryManager;
+package RegisteryManager;
 import java.io.*;
 
 class WindowManager

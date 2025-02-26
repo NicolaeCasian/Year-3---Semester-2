@@ -52,6 +52,7 @@ def manageConnection(con, addr):
             #Printing to the server
             print("We got the hello command")
             
+            
             #Printing to the Client
             con.send(b"Hello to you too")
 

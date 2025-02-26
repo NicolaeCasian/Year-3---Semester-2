@@ -1,68 +1,62 @@
-
-# Echo client program
-
 import socket
+import os
 
-
-HOST = '127.0.0.1'    # The remote host
-
+HOST = '127.0.0.1'  # The remote host
 PORT = 40003         # The same port as used by the server
 
-
-
-# create a new connection to the server
-
+# Create a new connection to the server
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
 s.connect((HOST, PORT))
-while True:
 
-    print("type input: ( try type <ping> with the brackets.")
+while True:
+    print("Type input: (Try typing <ping> with the brackets)")
 
     text = input()
 
-   
-
-   
-
     if text == '<q>':
-
+        # Send the quit command to the server and close the connection
         s.sendall('<q>'.encode())
-
         s.close()
-
         break
 
+    elif text == '<list>':
+        # Send the list command to the server and receive the file list
+        s.send(b"<list>")
+        data = s.recv(1024)
 
-    elif text =='<sendsong>':
+        print("Files available on the server:")
+        print(data.decode())
 
-        print("what is the file name?")
-
+    elif text == '<sendsong>':
+        print("What is the file name?")
         filename = input()
 
-        print("which part number?")
+        print("Which part number?")
+        numParts = input()
 
-        numParts= input()
-
-
+        # Prepare the message in the required format
         text = f'<addsong-{filename}-{numParts}>'
 
+        # Send the song information to the server
         s.sendall(text.encode())
-
         data = s.recv(1000)
 
+        print("Response: " + str(data.decode()))
 
-        print("Response:" + str(data))
+        # Check if the file exists before sending it
+        if os.path.exists(filename):
+            print(f"Sending file: {filename} (Part {numParts})")
 
-        print(f"Sending file: {numParts}")
-        chunk = open(str(numParts)+'.mp3', 'rb')
+            with open(filename, 'rb') as chunk:
+                content = chunk.read(1000)  # Read the file in chunks
 
-        content = chunk.read()
+                while content:
+                    s.sendall(content)  # Send each chunk to the server
+                    content = chunk.read(1000)  # Read the next chunk
 
-        chunk.close()
+                # After sending the file part, send the end marker
+                s.sendall(b'<end>')
+        else:
+            print(f"Error: File {filename} does not exist.")
 
-
-
-        s.sendall(content)
-
-        s.sendall(b'<end>')
+# After all interactions, the socket is already closed when <q> is typed

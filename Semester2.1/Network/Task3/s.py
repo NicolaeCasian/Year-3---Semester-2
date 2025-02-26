@@ -102,8 +102,10 @@ def manageConnection(con, addr):
             # List files in the current directory
             files = os.listdir('.')  
 
+            file_list = '\n'.join(files)
             # Send the file list to the client
-            con.send(("Directory List"+ files).encode())  
+            if file_list:
+                con.send(f"Directory List:\n{file_list}".encode())
             
 
 # Accept a new connection

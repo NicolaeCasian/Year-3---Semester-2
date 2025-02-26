@@ -1,4 +1,6 @@
-package RegistryManager;
+
+package RegisteryManager;
+
 public class PrintManager {
     private static PrintManager ptm;
 
@@ -18,6 +20,6 @@ public class PrintManager {
 
     //Print message to test out 
     public void print(String message){
-		System.out.println(message);
+		  System.out.println(message);
 	}
 }

@@ -16,7 +16,7 @@ class RegistryTest{
     PrintManager pm2 = Registry.getPrintManager();
     
     MessageManager mm1 = Registry.getMessageManager();
-    MessageManager mm2= Registry.getMessageManager();
+    MessageManager mm2 = Registry.getMessageManager();
    
     //Checking the SIngletone functionality
 		System.out.println("Log Manager: " + (lm1 == lm2) );

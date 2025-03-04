@@ -9,6 +9,5 @@ public class ComputerBuilderDirector {
         // Build and return a GFX computer
         return new Computer.Builder("2GB", "2TB", "Intel i7").setGraphicsCardEnabled(true).build();
     }
-
     
 }

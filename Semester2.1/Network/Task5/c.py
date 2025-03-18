@@ -1,86 +1,69 @@
 from jsonrpcclient import request, parse, Ok
-
-
 import requests
-
 import base64
 
-
-
 def sendPing():
-
-
     # send a request to the server
-
-    print("what is the servers port?")
-
-    portToCall = int(input())
-
+    try:
+        portToCall = int(input("What is the server's port? "))
+    except ValueError:
+        print("Invalid port number!")
+        return
 
     try:
-
-         response = requests.post(f"http://localhost:{portToCall}/", json=request("ping"))
-
-         parsed = parse(response.json())
-
-
-         print(parsed.result)
-
-    except:
-
-         print(" ----- Are you sure that port and function exist?")
-def sayHello(personName):
-
-
-
-    # send a request to the server
-
-    print("what is the servers port?")
-
-    portToCall = int(input())
-
-       
-
-       
-
-    try:
-
-        response = requests.post(f"http://localhost:{portToCall}/", json=request("printName", params={"name": personName}) )
-
+        response = requests.post(f"http://localhost:{portToCall}/", json=request("ping"))
         parsed = parse(response.json())
-
-       
-
         print(parsed.result)
+    except Exception as e:
+        print("----- Are you sure that port and function exist?")
+        print("Error:", e)
 
-    except:
+def whoAreyou():
+    # send a request to the server
+    try:
+        portToCall = int(input("What is the server's port? "))
+    except ValueError:
+        print("Invalid port number!")
+        return
 
-        print(" ------ Are you sure that port and function exist?")
-print("Welcome!")
+    portname = input("Enter the name to send: ")
 
+    try:
+        # Use the key "portname" to match the server's parameter name
+        response = requests.post(
+            f"http://localhost:{portToCall}/", 
+            json=request("printName", params={"portname": portname})
+        )
+        parsed = parse(response.json())
+        print(parsed.result)
+    except Exception as e:
+        print("------ Are you sure that port and function exist?")
+        print("Error:", e)
 
+def main():
+    print("Welcome!")
+    
+    while True:
+        print("\nPlease type a menu option:")
+        print("1. Send ping")
+        print("2. Say hello")
+        print("3. Quit")
+        
+        try:
+            option = int(input("Option: "))
+        except ValueError:
+            print("Invalid option, please enter a number.")
+            continue
 
+        if option == 1:
+            sendPing()
+        elif option == 2:
+            whoAreyou()
+        elif option == 3:
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid option. Please try again.")
 
-while True:
-
-    print("please type a menu option")
-
-
-    print("1. send ping")
-
-    print("2. say hello")
-
-
-
-    option = int(input())
-
-
-    if option == 1:
-
-        sendPing()
-
-       
-
-    elif option == 2:
-
-        sayHello('john')
+if __name__ == "__main__":
+    main()

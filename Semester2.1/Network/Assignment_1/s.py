@@ -13,7 +13,7 @@ myFriends = []
 if len(sys.argv) > 1:
     serverNumber = sys.argv[1]
 else:
-    print("Sorry, you forgot to add a server number... shutting down")
+    print("No server number given shutting down")
     quit()
 
 # Calculate the port number based on the server number.
@@ -31,9 +31,9 @@ def printName(portname):
 def make_folder(foldername):
     try:
         os.mkdir(foldername)
-        return Success(f"Folder '{foldername}' created.")
+        return Success(f"Folder '{foldername}' made.")
     except Exception as e:
-        return Success(f"Failed to create folder '{foldername}': {e}")
+        return Success(f"Failed to make folder '{foldername}': {e}")
 
 @method
 def delete_folder(foldername):

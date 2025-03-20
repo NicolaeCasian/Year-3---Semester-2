@@ -30,19 +30,25 @@ public class Client extends JFrame implements TreeSelectionListener {
     //All the leaf nodes under master node Payroll are added here
     Task designPayroll , codingPayroll , testingPayroll;
 
+    
+    //Java Swing components added here
     JScrollPane sp;
     JPanel treePanel;
     JTree tree;
     DefaultMutableTreeNode troot;
     JLabel timeTaken;
     
+    //Client Constructor which creates GUI and makes tasks
     public Client() {
         super("Task Composite");
         makeTasks();
         createGUI();
     }
 
+
+    //Create GUI method which creates GUI for the client 
     private void createGUI() {
+        //Creates a panel for the tree
         treePanel = new JPanel();
         getContentPane().add(treePanel);
         treePanel.setLayout(new BorderLayout());

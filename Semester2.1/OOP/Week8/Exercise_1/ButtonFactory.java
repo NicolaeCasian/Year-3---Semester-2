@@ -1,7 +1,7 @@
 public class ButtonFactory {
    // Single instances for the two states
    private Button selectedButton;
-   private Button normalButton;
+   private Button unselectedButton;
    
    //Button factory method whihc returns the button based on the state
    //Either Selected or normal as in unselected
@@ -15,10 +15,10 @@ public class ButtonFactory {
            return selectedButton;
       //Unselected button created when the button is not hoovered over
        } else {
-           if (normalButton == null) {
-               normalButton = new Button(false);
+           if (unselectedButton == null) {
+               unselectedButton = new Button(false);
            }
-           return normalButton;
+           return unselectedButton;
        }
    }
 }

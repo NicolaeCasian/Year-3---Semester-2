@@ -18,7 +18,7 @@ public class Button {
     public void draw(Graphics g, int tx, int ty, String name) {
         // Choose colors based on state
         Color borderColor = Color.BLACK;
-        Color fillColor = selected ? Color.PINK : Color.GREEN;
+        Color fillColor = selected ? Color.RED : Color.GREEN;
         Color textColor = Color.BLACK;
         
         // Draw border and fill

@@ -18,13 +18,13 @@ public class Client extends JFrame implements MouseMotionListener {
    
    //Constructor to create the client 
    public Client() {
-      //Set up the JFrame
-      super("Flyweight Canvas");
+      //Setting up the JFrame
+      super("Exercise 1");
       //Instantiate the ButtonFactory
       fact = new ButtonFactory();
       //Create the names and the folders
       makeNames();
-      makeFolders();
+      makeButtons();
       
       // Adding an empty JPanel so the JFrame has a content pane
       JPanel jp = new JPanel();
@@ -37,7 +37,7 @@ public class Client extends JFrame implements MouseMotionListener {
    }
    
    //Method to create the buttons
-   private void makeFolders() {
+   private void makeButtons() {
       buttons = new Vector<Button>();
       for (int i = 0; i < names.size(); i++) {
          // Initially, add unselected buttons.

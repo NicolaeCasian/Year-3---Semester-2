@@ -1,75 +1,259 @@
-# client.py
-from jsonrpcclient import request, parse
+from jsonrpcclient import request, parse, Ok
 import requests
+import base64
 
-def send_command(port, method_name, params=None):
-    if params is None:
-        params = {}
+def make_folder():
     try:
-        response = requests.post(f"http://localhost:{port}/", json=request(method_name, params=params))
+        port = int(input("What is the server's port? "))
+    except ValueError:
+        print("Invalid port number!")
+        return
+    foldername = input("Enter folder name: ")
+    try:
+        response = requests.post(f"http://localhost:{port}/", json=request("make_folder", params={"foldername": foldername}))
         parsed = parse(response.json())
         print(parsed.result)
     except Exception as e:
-        print(f"Error sending {method_name} command: {e}")
+        print("----- Error sending make_folder command:")
+        print("Error:", e)
+
+def delete_folder():
+    try:
+        port = int(input("What is the server's port? "))
+    except ValueError:
+        print("Invalid port number!")
+        return
+    foldername = input("Enter folder name to delete: ")
+    try:
+        response = requests.post(f"http://localhost:{port}/", json=request("delete_folder", params={"foldername": foldername}))
+        parsed = parse(response.json())
+        print(parsed.result)
+    except Exception as e:
+        print("----- Error sending delete_folder command:")
+        print("Error:", e)
+
+def whoareyou():
+    try:
+        port = int(input("What is the server's port? "))
+    except ValueError:
+        print("Invalid port number!")
+        return
+    portname = input("Enter the name to send: ")
+    try:
+        response = requests.post(
+            f"http://localhost:{port}/",
+            json=request("printName", params={"portname": portname})
+        )
+        parsed = parse(response.json())
+        print(parsed.result)
+    except Exception as e:
+        print("----- Error sending printName command:")
+        print("Error:", e)
+
+def get_version():
+    try:
+        port = int(input("What is the server's port? "))
+    except ValueError:
+        print("Invalid port number!")
+        return
+    try:
+        response = requests.post(f"http://localhost:{port}/", json=request("get_version"))
+        parsed = parse(response.json())
+        print(parsed.result)
+    except Exception as e:
+        print("----- Error sending get_version command:")
+        print("Error:", e)
+
+def ping():
+    try:
+        port = int(input("What is the server's port? "))
+    except ValueError:
+        print("Invalid port number!")
+        return
+    try:
+        response = requests.post(f"http://localhost:{port}/", json=request("ping"))
+        parsed = parse(response.json())
+        print(parsed.result)
+    except Exception as e:
+        print("----- Error sending ping command:")
+        print("Error:", e)
+
+def search_file():
+    try:
+        port = int(input("What is the server's port? "))
+    except ValueError:
+        print("Invalid port number!")
+        return
+    filename = input("Enter filename to search: ")
+    try:
+        response = requests.post(f"http://localhost:{port}/", json=request("search", params={"filename": filename}))
+        parsed = parse(response.json())
+        print(parsed.result)
+    except Exception as e:
+        print("----- Error sending search command:")
+        print("Error:", e)
+
+def startup():
+    try:
+        port = int(input("What is the server's port? "))
+    except ValueError:
+        print("Invalid port number!")
+        return
+    server_number = input("Enter server number: ")
+    try:
+        response = requests.post(f"http://localhost:{port}/", json=request("startup", params={"x": server_number}))
+        parsed = parse(response.json())
+        print(parsed.result)
+    except Exception as e:
+        print("----- Error sending startup command:")
+        print("Error:", e)
+
+def shutdown():
+    try:
+        port = int(input("What is the server's port? "))
+    except ValueError:
+        print("Invalid port number!")
+        return
+    server_number = input("Enter server number: ")
+    try:
+        response = requests.post(f"http://localhost:{port}/", json=request("shutdown", params={"x": server_number}))
+        parsed = parse(response.json())
+        print(parsed.result)
+    except Exception as e:
+        print("----- Error sending shutdown command:")
+        print("Error:", e)
+
+def list_friends():
+    try:
+        port = int(input("What is the server's port? "))
+    except ValueError:
+        print("Invalid port number!")
+        return
+    try:
+        response = requests.post(f"http://localhost:{port}/", json=request("list_friends"))
+        parsed = parse(response.json())
+        print(parsed.result)
+    except Exception as e:
+        print("----- Error sending list_friends command:")
+        print("Error:", e)
+
+def online():
+    try:
+        port = int(input("What is the server's port? "))
+    except ValueError:
+        print("Invalid port number!")
+        return
+    server_number = input("Enter server number: ")
+    try:
+        response = requests.post(f"http://localhost:{port}/", json=request("online", params={"x": server_number}))
+        parsed = parse(response.json())
+        print(parsed.result)
+    except Exception as e:
+        print("----- Error sending online command:")
+        print("Error:", e)
+
+def offline():
+    try:
+        port = int(input("What is the server's port? "))
+    except ValueError:
+        print("Invalid port number!")
+        return
+    server_number = input("Enter server number: ")
+    try:
+        response = requests.post(f"http://localhost:{port}/", json=request("offline", params={"x": server_number}))
+        parsed = parse(response.json())
+        print(parsed.result)
+    except Exception as e:
+        print("----- Error sending offline command:")
+        print("Error:", e)
+
+def heartbeat():
+    try:
+        port = int(input("What is the server's port? "))
+    except ValueError:
+        print("Invalid port number!")
+        return
+    try:
+        response = requests.post(f"http://localhost:{port}/", json=request("heartbeat"))
+        parsed = parse(response.json())
+        print(parsed.result)
+    except Exception as e:
+        print("----- Error sending heartbeat command:")
+        print("Error:", e)
+
+def pass_message():
+    try:
+        port = int(input("What is the server's port? "))
+    except ValueError:
+        print("Invalid port number!")
+        return
+    target = input("Enter server number: ")
+    msg = input("Enter message to pass: ")
+    try:
+        response = requests.post(f"http://localhost:{port}/", json=request("pass_msg", params={"msg": msg, "x": target}))
+        parsed = parse(response.json())
+        print(parsed.result)
+    except Exception as e:
+        print("----- Error sending pass_msg command:")
+        print("Error:", e)
 
 def main():
-    port = int(input("Enter the server port to connect to: "))
-    
-    print("\nPlease type a menu option:")
-    print("1.make_folder <foldername>")
-    print("2. delete_folder <foldername>")
-    print("3. whoareyou")
-    print("4. get_version")
-    print("5. ping")
-    print("6. search <filename>")
-    print("7. startup <server_number>")
-    print("8. shutdown <server_number>")
-    print("9. list_friends")
-    print("10. online <server_number>")
-    print("11. offline <server_number>")
-    print("12. heartbeat")
-    print("13. pass <msg> <server_number>")
-    print("14. quit")
+    print("Welcome!")
     
     while True:
-        command = input("\nEnter command: ").strip()
-        if command == "quit":
-            break
-        parts = command.split()
-        if not parts:
+        print("\nPlease type a menu option:")
+        print("1.  Make folder")
+        print("2.  Delete folder")
+        print("3.  Who are you?")
+        print("4.  Get version")
+        print("5.  Ping")
+        print("6.  Search file")
+        print("7.  Startup")
+        print("8.  Shutdown")
+        print("9.  List friends")
+        print("10. Online")
+        print("11. Offline")
+        print("12. Heartbeat")
+        print("13. Pass message")
+        print("14. Quit")
+        
+        try:
+            option = int(input("Option: "))
+        except ValueError:
+            print("Invalid option, please enter a number.")
             continue
-        cmd = parts[0]
-        if cmd == "make_folder" and len(parts) == 2:
-            send_command(port, "make_folder", {"foldername": parts[1]})
-        elif cmd == "delete_folder" and len(parts) == 2:
-            send_command(port, "delete_folder", {"foldername": parts[1]})
-        elif cmd == "whoareyou":
-            send_command(port, "whoareyou")
-        elif cmd == "get_version":
-            send_command(port, "get_version")
-        elif cmd == "ping":
-            send_command(port, "ping")
-        elif cmd == "search" and len(parts) == 2:
-            send_command(port, "search", {"filename": parts[1]})
-        elif cmd == "startup" and len(parts) == 2:
-            send_command(port, "startup", {"x": parts[1]})
-        elif cmd == "shutdown" and len(parts) == 2:
-            send_command(port, "shutdown", {"x": parts[1]})
-        elif cmd == "list_friends":
-            send_command(port, "list_friends")
-        elif cmd == "online" and len(parts) == 2:
-            send_command(port, "online", {"x": parts[1]})
-        elif cmd == "offline" and len(parts) == 2:
-            send_command(port, "offline", {"x": parts[1]})
-        elif cmd == "heartbeat":
-            send_command(port, "heartbeat")
-        elif cmd == "pass" and len(parts) >= 3:
-            # The message is everything except the first word and the last parameter.
-            target = parts[-1]
-            msg = " ".join(parts[1:-1])
-            send_command(port, "pass_msg", {"msg": msg, "x": target})
+
+        if option == 1:
+            make_folder()
+        elif option == 2:
+            delete_folder()
+        elif option == 3:
+            whoareyou()
+        elif option == 4:
+            get_version()
+        elif option == 5:
+            ping()
+        elif option == 6:
+            search_file()
+        elif option == 7:
+            startup()
+        elif option == 8:
+            shutdown()
+        elif option == 9:
+            list_friends()
+        elif option == 10:
+            online()
+        elif option == 11:
+            offline()
+        elif option == 12:
+            heartbeat()
+        elif option == 13:
+            pass_message()
+        elif option == 14:
+            print("Goodbye!")
+            break
         else:
-            print("Unknown or malformed command.")
+            print("Invalid option. Please try again.")
 
 if __name__ == "__main__":
     main()

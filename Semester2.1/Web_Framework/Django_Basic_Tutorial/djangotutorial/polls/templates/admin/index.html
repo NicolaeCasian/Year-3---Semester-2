@@ -1,0 +1,24 @@
+
+<h1>Welcome to the Polls Administration</h1>
+
+<section>
+    <h2>Quick Stats</h2>
+    <ul>
+        <li>Total Questions: {{ total_questions }}</li>
+        <li>Total Choices: {{ total_choices }}</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Quick Links</h2>
+    <ul>
+        <li><a href="{% url 'admin:changeQuestion' question.id %}">Edit Question</a></li>
+        <li><a href="{% url 'admin:changeChoice' %}">Manage Choices</a></li>
+    </ul>
+</section>
+
+<section>
+    <h2>Recent Activity</h2>
+    <p>Use the navigation on the left to view detailed logs and actions performed.</p>
+</section>
+

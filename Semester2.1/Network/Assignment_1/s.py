@@ -26,21 +26,16 @@ portNumber = 5000 + int(serverNumber)
 def ping():
     return Success("pong")
 
-#PrintName method which takes a string and returns hello + the string
-@method
-def printName(portname):
-    return Success(f"hello {portname}")
-
 #Method to make a new directory aka a new folder
 @method
 def make_folder(foldername):
     #try to make a directory and return a success message if successful
     try:
         os.mkdir(foldername)
-        return Success(f"Folder '{foldername}' made.")
+        return Success(f"Folder {foldername} made.")
     #return an error message if the directory cannot be made
     except Exception as e:
-        return Success(f"Failed to make folder '{foldername}': {e}")
+        return Success(f"Failed to make folder {foldername}: {e}")
 
 #Method to delete a folder
 @method
@@ -48,10 +43,10 @@ def delete_folder(foldername):
     #try to remove a folder if not return an error message
     try:
         os.rmdir(foldername)
-        return Success(f"Folder '{foldername}' deleted.")
+        return Success(f"Folder {foldername} deleted.")
     #return an error message if the folder cannot be deleted
     except Exception as e:
-        return Success(f"Failed to delete folder '{foldername}': {e}")
+        return Success(f"Failed to delete folder {foldername}: {e}")
 
 #Method to show the servernumber and port number of the running server
 @method

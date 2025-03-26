@@ -124,7 +124,11 @@ def offline(x):
 #Method to ping all the servers in the firends list
 @method
 def heartbeat():
+    #Array to store the results
     results = {}
+
+    #Loop through the friends list and ping each server
+    #If the server is online return pong else return no response
     for friend in myFriends:
         friend_port = 5000 + int(friend)
         try:
@@ -143,10 +147,11 @@ def heartbeat():
 
 @method
 def pass_msg(msg, x):
-    # x is the target server number.
+    # Check if the message is for this server.
     if int(serverNumber) == int(x):
         return Success(f"Message received at server {serverNumber}: {msg}")
     else:
+        # Forward the message to all friends.
         forwarded = False
         for friend in myFriends:
             friend_port = 5000 + int(friend)
@@ -158,15 +163,11 @@ def pass_msg(msg, x):
                 forwarded = True
             except Exception:
                 continue
+        # Return a success message if the message was forwarded.
         if forwarded:
             return Success(f"Message forwarded towards server {x}.")
         else:
             return Success("No friend could forward the message.")
-
-# This method is used to shutdown the current server.
-@method
-def shutdown():
-    os._exit(0)
-
+#Print the server number and port number of the running server
 print(f"Server number {serverNumber} running on port {portNumber}.....")
 serve(port=portNumber)

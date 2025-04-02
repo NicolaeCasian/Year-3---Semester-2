@@ -1,4 +1,3 @@
-package Exercise_1;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -95,37 +94,40 @@ public class Client extends JFrame implements TreeSelectionListener {
     private void makeTasks() {
        //All the nodes under the Master Node Projects are added here
        projects = new MasterTask("Projects", 0);
+       projects.add(sap = new MasterTask("SAP", 0));
+       projects.add(website = new MasterTask("Website", 0));
+        projects.add(payroll = new MasterTask("Payroll", 0));
 
         //All the nodes under the Master Node SAP are added here
-        sap = new MasterTask(projects, "SAP", 0);
-        analysisSap = new MasterTask(sap, "Analysis", 0);
-        codingSap = new MasterTask(sap, "Coding", 0);
-        requirementsSap = new MasterTask(sap, "Requirements", 0);
+        sap.add(analysisSap = new MasterTask("Analysis", 0));
+        sap.add(codingSap = new MasterTask("Coding", 20));
+        sap.add(requirementsSap = new MasterTask("Requirements", 10));
+
 
         //All Leaf nodes under the master Node Analysis are added here
-        uml = new Task(analysisSap, "UML", rand_time(10));
-        dataAnalysis = new Task(analysisSap, "Data Analysis", rand_time(10));
-        screenDesign = new Task(analysisSap, "Screen Design", rand_time(10));
+        analysisSap.add(uml = new Task("UML", rand_time(10)));
+        analysisSap.add(dataAnalysis = new Task("Data Analysis", rand_time(10)));
+        analysisSap.add(screenDesign = new Task("Screen Design", rand_time(10)));
+
 
         //All the nodes under website 
-        website = new MasterTask(projects, "Website", 0);
-        designWebsite = new MasterTask(website, "Design", 0);
-        codingWebsite = new MasterTask(website, "Coding", 0);
-        analysisWebsite = new MasterTask(website, "Analysis", 0);
+        website.add(designWebsite = new MasterTask("Design", 20));
+        website.add(codingWebsite = new MasterTask("Coding", 20));
+        website.add(analysisWebsite = new MasterTask("Analysis", 10));
 
         //All the leaf nodes under the master node Coding are added here
-        prog = new Task(codingWebsite, "Programming", rand_time(10));
-        screens = new Task(codingWebsite, "Screens", rand_time(10));
+        codingWebsite.add(prog = new Task("Programming", rand_time(10)));
+        codingWebsite.add(screens = new Task("Screen Design", rand_time(10)));
 
         //All the leaf nodes under master node Payroll are added here
-        payroll = new MasterTask(projects, "Payroll", 0);
-        designPayroll = new Task(payroll, "Design", rand_time(10));
-        codingPayroll = new Task(payroll, "Coding", rand_time(10));
-        testingPayroll = new Task(payroll, "Testing", rand_time(10));
+        payroll.add(designPayroll = new Task("Design", rand_time(10)));
+        payroll.add(codingPayroll = new Task("Coding", rand_time(10)));
+        payroll.add(testingPayroll = new Task("Testing", rand_time(10)));
     }
 
+    //Method to calculate random time
     private long rand_time(long time) {
-        return time + (long)(Math.random() * 1000);
+        return time +(long)(Math.random () -0.5)*time/5;
     }
 
     public void valueChanged(TreeSelectionEvent e) {
@@ -134,7 +136,7 @@ public class Client extends JFrame implements TreeSelectionListener {
         String nodeName = (String)node.getUserObject();
         Task t = projects.getChild(nodeName);
         if (t != null) {
-            timeTaken.setText("Time taken for " + nodeName + " is " + t.getTime());
+            timeTaken.setText("Time taken for " + nodeName + " is " + t.getTime() + " hours");
         }
     }
 

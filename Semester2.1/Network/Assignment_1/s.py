@@ -75,7 +75,7 @@ def startup(x):
     new_server_num = x  # expecting x to be a string or number
     new_port = 5000 + int(new_server_num)
     # Start a new server process.
-    subprocess.Popen(["python", "s.py", str(new_server_num)])
+    subprocess.Popen(["py", "s.py", str(new_server_num)])
     # Register the new server as a friend.
     if new_server_num not in myFriends:
         myFriends.append(new_server_num)

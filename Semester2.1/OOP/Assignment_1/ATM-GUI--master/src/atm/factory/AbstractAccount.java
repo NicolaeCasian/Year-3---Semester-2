@@ -32,4 +32,10 @@ public abstract class AbstractAccount {
     public int getAccountID() {
         return accountID;
     }
+    public void setAccountID(int accountID) {
+        this.accountID = accountID;
+    }
+    public void deposit(double amount) {
+        this.balance += amount;
+    }
 }

@@ -9,6 +9,7 @@ public class WithdrawCommand implements Command {
     private final int accId;
     private final String type;
 
+    // Constructor for WithdrawCommand
     public WithdrawCommand(Bank bank, double amount, int accId, String type) {
         this.bank   = bank;
         this.amount = amount;
@@ -16,6 +17,7 @@ public class WithdrawCommand implements Command {
         this.type   = type;
     }
 
+    // Command interface method to execute the withdrawal
     @Override
     public void execute() {
         bank.withDraw(amount, accId, type);

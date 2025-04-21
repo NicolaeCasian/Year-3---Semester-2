@@ -38,20 +38,66 @@ import atm.command.WithdrawCommand;
 
 public class Bank extends Frame implements ActionListener {
 
-    private JFrame jSignPage, jMenu, j4, newCreateAcc, j1, depositF, j2, j3, jCreatAcc, jCreateAcc;
-    private Label lblInput, lblOutput, lblName, lblPass;
-    private TextField tfName, tfPass, tfUserName, tfUserPass, tfBal, tfAccId;
-    private TextField transFromAccId, transAmount, transInAccId;
-    private TextField delAccId, depAccId, depAmount, depType, withAccId, withAmount, withType, showAccId;
-    private JButton signUp, signIn, JCreateUser;
-    private JButton transfer, createAccount, deleteAccount, deposit, withDraw, showAcc, showAllAcc, delUser, logOut, quit;
-    private JButton transTranfer, depBut, withWithDraw, show;
-    private String accType;
-    private Calendar rightNow;
+    private JFrame jSignPage;
+	private Label lblInput;
+	private Label lblOutput;
+	private TextField tfName;
+	private TextField tfPass;
+	private JButton signUp;
+	private JButton signIn;
+
+	private JFrame jMenu;
+	private JButton transfer;
+	private JFrame j4;
+	private TextField transFromAccId;
+	private TextField transAmount;
+	private TextField transInAccId;
+	private JButton transTranfer;
+	private Account accWith;
+	private JButton createAccount;
+	private JFrame newCreateAcc;
+	private JButton deleteAccount;
+	private TextField delAccId;
+	private JFrame j1;
+	private JButton delete;
+	private JButton deposit;
+	private JFrame depositF;
+	private TextField depAccId;
+	private TextField depAmount;
+	private TextField depType;
+	private JButton depBut;
+	private JButton withDraw;
+	private JFrame j2;
+	private TextField withAccId;
+	private TextField withAmount;
+	private TextField withType;
+	private JButton withWithDraw;
+	private JButton showAcc;
+	private JFrame j3;
+	private TextField showAccId;
+	private JButton show;
+	private JButton showAllAcc;
+	private JButton delUser;
+	private JButton logOut;
+	private JButton quit;
+
+	private JFrame jCreatAcc;
+	private Label lblName; // Declare input Label
+	private Label lblPass; // Declare output Label
+	private TextField tfUserName; // Declare input TextField
+	private TextField tfUserPass;
+	private JButton JCreateUser;
+	private TextField tfBal;
+	private TextField tfAccId;
+	private String accType;
+	private double balance;
+	private int accId;
+	private JFrame jCreateAcc;
 
     private HashMap<User, ArrayList<Account>> users;
     private User loggedInUser;
     private int hour;
+    private Calendar rightNow;
 
     public Bank() {
         users = new HashMap<>();
@@ -112,7 +158,8 @@ public class Bank extends Frame implements ActionListener {
         jSignPage.setVisible(true);
     }
 
-    // === Builder+Factory+Decorator for account creation ===
+    //Builder/Factory and Decorator Design Patterns being used here
+    // 1. Builder/Factory for creating user accounts
     public void showCreateAccMenu() {
         jCreatAcc = new JFrame();
         JPanel mainPanel = new JPanel();
@@ -233,7 +280,7 @@ public class Bank extends Frame implements ActionListener {
         heading.setFont(new Font("Serif",Font.PLAIN,50));
         mainPanel.add(heading);
 
-        // 1. Transfer (Command)
+        // 1. Transfer (Command) 
         transfer = new JButton(" 1.  Transfer ");
         transfer.setFont(new Font("Serif",Font.PLAIN,30));
         transfer.addActionListener(e->{
@@ -253,7 +300,8 @@ public class Bank extends Frame implements ActionListener {
                     int fromId = Integer.parseInt(transFromAccId.getText());
                     int toId   = Integer.parseInt(transInAccId.getText());
                     double amt = Double.parseDouble(transAmount.getText());
-                    // Command
+                    
+                    //Transfer Command being used 
                     Command cmd = new TransferCommand(this, amt, fromId, toId);
                     cmd.execute();
                     JOptionPane.showMessageDialog(null,"Transfer successful");

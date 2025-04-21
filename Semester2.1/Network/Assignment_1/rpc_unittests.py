@@ -10,7 +10,7 @@ class MyTests(unittest.TestCase):
         parsed = parse(response.json()) #8
         print("result from server: " + parsed.result) # 8
         # run the test # 8
-        self.assertEqual(parsed.result, 'pong') # 
+        self.assertEqual(parsed.result, 'pong') #
     
     #Test 2: Test the make_folder function
     def test_make_folder(self):

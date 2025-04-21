@@ -3,6 +3,7 @@ package atm.builder;
 import atm.factory.AbstractAccount;
 import atm.factory.SavingsAccount;
 import atm.factory.CheckingAccount;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class SignUpRequest {
     private String username;
@@ -29,6 +30,8 @@ public class SignUpRequest {
     }
 
     public static class Builder {
+        private static final AtomicInteger ACCOUNT_ID_SEQUENCE = new AtomicInteger(1000);
+
         private String username;
         private String password;
         private AbstractAccount account;
@@ -39,24 +42,27 @@ public class SignUpRequest {
         }
 
         public Builder setAccountType(String type, double balance) {
+            int newId = generateAccountID();
             String t = type.toLowerCase();
             if (t.equals("savings") || t.equals("saving")) {
-                this.account = new SavingsAccount(balance, type, generateAccountID());
+                this.account = new SavingsAccount(balance, type, newId);
             } else if (t.equals("checking")) {
-                this.account = new CheckingAccount(balance, type, generateAccountID());
+                this.account = new CheckingAccount(balance, type, newId);
             } else {
-                throw new IllegalArgumentException("Invalid account type");
+                throw new IllegalArgumentException("Invalid account type: " + type);
             }
             return this;
         }
-        
 
         private int generateAccountID() {
-            // In production you’d use a proper sequence or UUID, not random
-            return (int)(Math.random() * 10000);
+            // Sequential unique IDs starting from 1000
+            return ACCOUNT_ID_SEQUENCE.getAndIncrement();
         }
 
         public SignUpRequest build() {
+            if (account == null) {
+                throw new IllegalStateException("Account type must be set before building");
+            }
             return new SignUpRequest(this);
         }
     }

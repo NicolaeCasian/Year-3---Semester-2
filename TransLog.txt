@@ -1,2 +1,6 @@
-Account ID: 1 Balance: 12.0 Type: Checking
+Account ID: 2 Balance: 13233.0 Type: savings
 Transcaction logs: 
+Amount: $11.0 Time :30min Type: Transfer
+Amount: $1111.0 Time :30min Type: cash
+Amount: $111.0 Time :30min Type: cash
+Amount: $11111.0 Time :30min Type: 2
